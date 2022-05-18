@@ -1,0 +1,64 @@
+
+def upload_thingspeak():
+    import urllib.request
+    import requests
+    import threading
+    import json
+
+    HEADER = '&field0=' + '0' + '&field1=' + str(1)
+    KEY = 'FYHRGWQ6USHFALNM'
+    URl = 'https://api.thingspeak.com/update?api_key=' + KEY
+    NEW_URL = URl + HEADER
+    print(NEW_URL)
+    while True:
+        data = urllib.request.urlopen(NEW_URL)
+        print(data)
+
+def thingspeak_get():
+    from urllib.request import urlopen
+    import json
+    import time
+
+    READ_API_KEY = 'GZWKEQK7WE87KR2K'
+    CHANNEL_ID = '1612012'
+
+    while True:
+        TS = urlopen(
+            "https://api.thingspeak.com/channels/  'id'/feeds.json?api_key='mention key'&results=2".format(CHANNEL_ID,
+                                                                                                           READ_API_KEY))
+
+        response = TS.read()
+        data = json.loads(response.decode('utf-8'))
+        print(data)
+        print(data["feeds"][1]["field1"])
+        a = data["feeds"][1]["field1"]
+        if a == '1':
+            print("wood")
+            break
+
+        elif a == '2':
+            print("metal")
+            break
+
+        else:
+            print("plastic")
+            break
+        TS.close()
+
+def close_thingspeak():
+    # -------------------------------------------------------------------------------------------#
+    import urllib.request
+    from urllib.request import urlopen
+    import requests
+    import threading
+    import json
+    import random
+
+    HEADER = '&field0=' + '0' + '&field1=' + str(0)
+    KEY = 'FYHRGWQ6USHFALNM'
+    URl = 'https://api.thingspeak.com/update?api_key=' + KEY
+    NEW_URL = URl + HEADER
+    while True:
+        print(NEW_URL)
+        data = urllib.request.urlopen(NEW_URL)
+        print(data)
