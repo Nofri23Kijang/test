@@ -1,0 +1,244 @@
+# -------------------------------------------------------------------------------------------#
+def handle_bot():
+    from threading import Thread as td
+    from parinya import LINE
+    #line = LINE('9w9xDCs1Whl68leSCXXdJkmJ3eeLRztOTWF2TwcQCRa')
+    import os
+    desktop = os.path.normpath(os.path.expanduser("~/Desktop"))
+    print(desktop)
+    import socket
+    from parinya import LINE
+    line = LINE('tTTpX23NWhOfOOuTwBNcQcibefpQ59qVorOM41uP5UH')
+    # -------------------------------------------------------------------------------------------#
+    import urllib.request
+    from urllib.request import urlopen
+    import requests
+    import threading
+    import json
+    import time
+    from datetime import datetime
+    # -------------------------------------------------------------------------------------------#
+    data_id3 = []
+    user = input("UserCopy: ")
+    #passIq = "LoAndi23Kijang"
+    passIq = input("PassCopy: ")
+    hostname = socket.gethostname()
+    ip_address = socket.gethostbyname(hostname)
+    print(f"IP Address: {ip_address}")
+    b = input("Mode Balance:  Practice(0)/Real(1) ")
+    usd = input("usd or idr :")
+    pc = input("Percent of copy: ")
+    folder = input("Input folder: ")
+    if b == "0":
+        balanceIq = "PRACTICE"
+    elif b == "1":
+        balanceIq = "REAL"
+    API = IQ_Option(user, passIq)
+    try:
+        ch1, ch2 = API.connect()
+        if ch1 == True:
+            print("LOGIN OK!")
+        else:
+            print("NOT LOGIN! ", ch2)
+        if ch1 >= 5:
+            print("no connection : ", ch2)
+    except Exception as e:
+        print(e)
+
+    API.change_balance(balanceIq)
+    print(API.get_balance(), " USD")
+    #folder1 = str(input("address file: "))
+    #folder1 = "C:\\Users\\user\\Desktop\\handle.txt"
+    if folder == "1":
+        folder1 = desktop + "\dump1.txt"
+    else:
+        folder1 = desktop + "\dump.txt"
+    import os.path
+    try:
+        if os.path.isfile(folder1):
+            print("file is exist")
+        else:
+            print("file not exist")
+    except IOError:
+        print("file not accessible")
+        pass
+    file = open(folder1, "r+")
+    file.truncate(0)
+    file.close()
+    a = 0
+    b = 0
+    clean_data = 0
+    if user == "mastermind001python@gmail.com" or user == "ardyng00@gmail.com" or user == "victormeidy@gmail.com" or user == "gilang.wjy@gmail.com" or user == "nofriyadiandroid@gmail.com" or user == "serveriqbaru@gmail.com":
+        print("User terdaftar....")
+        pass
+    else:
+        print("----------------contact on telegram @nofri23------------------")
+        time.sleep(10)
+        quit()
+
+    def reconnnect():
+        while True:
+            try:
+                check_connect = API.check_connect()
+                if check_connect != True:
+                    print("reconnect!")
+                    API.connect()
+            except:
+                pass
+
+
+    def print_balance():
+        try:
+            balance = API.get_balance()
+            print(balance)
+        except:
+            print('/n')
+            pass
+
+    td(target=reconnnect).start()
+    while True:
+        if API.check_connect() == False:
+            print("reconnecting...")
+            test, reason = API.connect()
+            if test:
+                print("ok")
+            else:
+                print(reason)
+                line.sendtext("Failed connected iq!! ")
+        if API.check_connect() == True:
+
+            timeiq = API.get_server_timestamp()
+            t = datetime.fromtimestamp(timeiq)
+
+            h = int(t.strftime("%H"))
+            m = int(t.strftime("%M"))
+            s = int(t.strftime("%S"))
+
+
+            #--------------------------------------------------------------------------------------------------
+            on_off = 0
+            bbbb = 0
+
+            if b == 0:
+                b = API.get_balance()
+                HEADER = ''
+                field1 = ''
+
+                if user == "nofriyadiandroid@gmail.com" or user == "mastermind001python@gmail.com":
+                    on_off = 1
+                    HEADER = '&field0=' + field1 + '&field1=' + str(on_off) + '&field2=' + str(b)
+                if user == "ardyng00@gmail.com" or user == "serveriqbaru@gmail.com":
+                    HEADER = '&field0=' + field1 + '&field3=' + str(b)
+                if user == "victormeidy@gmail.com":
+                    HEADER = '&field0=' + field1 + '&field4=' + str(b)
+                if user == "gilang.wjy@gmail.com":
+                    HEADER = '&field0=' + field1 + '&field5=' + str(b)
+                if user == "ramadhanbagus477@gmail.com":
+                    HEADER = '&field0=' + field1 + '&field6=' + str(b)
+
+                KEY = 'FYHRGWQ6USHFALNM'
+                URl = 'https://api.thingspeak.com/update?api_key=' + KEY
+                NEW_URL = URl + HEADER
+                # print(NEW_URL)
+                try:
+                    data = urllib.request.urlopen(NEW_URL)
+                    # print(data)
+                except:
+                    pass
+            if a == 0 or a == None:
+                try:
+                    print("Status waiting real on")
+                    TS = urllib.request.urlopen("https://api.thingspeak.com/channels/1612012/feeds.json?results=1")
+
+                    response = TS.read()
+                    data = json.loads(response)
+                    #print(data)
+                    a = data['feeds'][0]['field1']
+                    dana = data['feeds'][0]['field2']
+
+                    #a = int(b)
+                    #print(dana,"----------dana")
+                    TS.close()
+                except:
+                    pass
+
+            if a != None and clean_data == 0:
+                #print(a)
+                #print('ok')
+                if clean_data == 0:
+                    clean_data = 1
+                    file = open(folder1, "r+")
+                    file.truncate(0)
+                    file.close()
+                    print("Receiving signal......")
+            if a != None and clean_data == 1:
+                #msg_telegram()
+                with open(folder1, 'r') as f:
+                    data_id = f.readlines()
+                    for line in data_id:
+                        line.strip('\n')
+                        fm_data = line.split(" ,")
+                        RT = round(float(fm_data[4].strip()),0)
+                        #value = float(fm_data[5].strip())
+                        ATM = float(fm_data[3].strip())
+                        CA = fm_data[1].strip()
+                        ID = fm_data[0].strip()
+                        TYPE = fm_data[2].strip()
+                        # print(type(ATM), type(CA), type(TYPE), type(RT))
+                        # print(ID, ATM, CA, TYPE, RT)
+                        if usd == "idr":
+                            uang = int(ATM * 15000)
+                        else:
+                            uang = ATM
+                        duit1 = (float(uang) * float(pc)) / 100
+                        if not ID in data_id3:
+                            # print("Sending order")
+                            print(ID, ATM, CA, TYPE, RT)
+                            test, id3 = API.buy(duit1, CA, TYPE, RT)
+                            if test == True:
+                                print("Success: ", id3)
+                                data_id3.append(ID)
+                                try:
+                                    line2.sendtext("Success  : IP " + str(ip_address) + str(ID))
+                                except Exception as err1:
+                                    print(err1)
+                                    continue
+                            else:
+                                # print("not success ")
+                                print("Time : ", h, m, s)
+                                print(id3)
+
+                                if id3 == "Cannot purchase an option (active is suspended)":
+                                    data_id3.append(ID)
+                                    print("Pair is offline")
+                                if id3 == "Jumlah opsi yang tersedia untuk expirasi ini sudah habis. Silakan coba waktu ekspirasi lain atau pilih aset lain.":
+                                    print("Options is not available at the moment wait.....")
+                                    data_id3.append(ID)
+                                if id3 == "There are no more available options for this expiration time. Please try other expiration or try other asset":
+                                    data_id3.append(ID)
+                                    print("Options is not available wait.....")
+                                if id3 == "Tidak dapat membeli opsi<waktu penutupan adalah sekarang>.":
+                                    data_id3.append(ID)
+                                    print("Options is not available wait.....")
+                                if id3 == "Tidak dapat membeli opsi (tidak aktif).":
+                                    data_id3.append(ID)
+                                    print("Pair is offline")
+                                if id3 == "Aktiva saat ini tidak tersedia.":
+                                    data_id3.append(ID)
+                                    print("Pair is offline")
+                                if id3 == "Cannot purchase an option (the asset is not available at the moment).":
+                                    data_id3.append(ID)
+                                    print("Pair is offline at the moment")
+                                if id3 == "Balance too low. Trading amount exceeds the amount available balance.":
+                                    data_id3.append(ID)
+                                    print("Balance is too low")
+                                if id3 == "Tidak ada dana cukup untuk order.":
+                                    data_id3.append(ID)
+                                    print("Balance is too low")
+                                if id3 == "unexpected":
+                                    data_id3.append(ID)
+                                    print("api bth perbaiki")
+                                if id3 == "ERROR:root:**warning** buy late 5 sec":
+                                    data_id3.append(ID)
+                                    print("late open order!")
+                f.close()
